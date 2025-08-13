@@ -1,0 +1,165 @@
+/* --- Quick Model Bar styles --- */
+#quick-model-bar {
+  display: flex;
+  gap: 6px;
+  margin-left: 10px;
+  align-items: center;
+  pointer-events: auto;          /* header uses pointer-events tricks */
+}
+
+#quick-model-bar .qm-btn {
+  font: inherit;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--token-border-subtle, rgba(255,255,255,.18));
+  background: var(--token-surface-secondary, transparent);
+  color: var(--token-text-primary, inherit);
+  cursor: pointer;
+  background-color: black;
+}
+
+#quick-model-bar .qm-btn:hover {
+  background: var(--token-surface-hover, rgba(255,255,255,.06));
+}
+
+#quick-model-bar .qm-btn.active {
+  border-color: var(--token-text-accent, currentColor);
+  box-shadow: 0 0 0 1px var(--token-text-accent, currentColor) inset;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  /* The header is hidden on small viewports; keep our bar unobtrusive if shown */
+  #quick-model-bar .qm-btn {
+    padding: 5px 8px
+  }
+}
+
+/* put everything at the left edge instead of space-between */
+#page-header {
+  justify-content: flex-start !important;
+}
+
+/* push the right-side actions container to the far right */
+#page-header > .flex.items-center:last-of-type {
+  margin-left: auto;
+}
+
+/* keep a small gap between the dropdown and your bar */
+#page-header > #quick-model-bar {
+  margin-left: 8px;  /* already had margin-left in your CSS; tweak as you like */
+}
+
+/* optional: keep the bar vertically aligned */
+#quick-model-bar { align-items: center }
+
+/* --- Toggle for showing/hiding the native dropdown --- */
+#qm-native-toggle {
+  width: 28px;                  /* fixed footprint so layout never jumps */
+  height: 28px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--token-border-subtle, rgba(255,255,255,.18));
+  background: var(--token-surface-secondary, #000);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;         /* header uses pointer-events tricks */
+}
+
+/* style the checkbox a touch, but keep it native */
+#qm-native-toggle input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--token-text-accent, #fff);
+}
+
+/* new: attach to <html>, which is stable across re-renders */
+html.qm-hide-native [data-testid="model-switcher-dropdown-button"] {
+  display: none !important;
+}
+
+/* (optional) if ChatGPT wraps the button in an extra first .flex container, hide that empty space too */
+html.qm-hide-native #page-header > .flex.items-center:first-of-type > [data-testid="model-switcher-dropdown-button"] {
+  display: none !important;
+}
+
+/* fixed-footprint wrapper you already have */
+#qm-native-toggle {
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--token-border-subtle, rgba(255,255,255,.18));
+  background: transparent;              /* keep wrapper neutral */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* fixed-footprint wrapper you already have */
+#qm-native-toggle {
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--token-border-subtle, rgba(255,255,255,.18));
+  background: transparent;              /* keep wrapper neutral */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* fully custom checkbox so the fill can be dark */
+#qm-native-toggle input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--token-border-subtle, rgba(255,255,255,.25));
+  background-color: var(--token-main-surface-secondary, #111); /* <-- dark fill */
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+}
+
+/* hover/focus polish */
+#qm-native-toggle input[type="checkbox"]:hover {
+  border-color: var(--token-text-secondary, rgba(255,255,255,.45));
+}
+#qm-native-toggle input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--token-text-accent, #8ab4f8);
+  outline-offset: 2px;
+}
+
+/* draw a white checkmark when checked, keep background dark */
+#qm-native-toggle input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border: 2px solid var(--token-text-primary, #fff);
+  border-top: 0;
+  border-right: 0;
+  transform: translateY(-1px) rotate(-45deg) scale(0);
+  transition: transform 120ms ease-in-out;
+}
+#qm-native-toggle input[type="checkbox"]:checked::before {
+  transform: translateY(-1px) rotate(-45deg) scale(1);
+}
+
+/* optional: nicer look in light mode */
+@media (prefers-color-scheme: light) {
+  #qm-native-toggle input[type="checkbox"] {
+    background-color: #fff;
+    border-color: rgba(0,0,0,.25);
+  }
+  #qm-native-toggle input[type="checkbox"]::before {
+    border-color: #111;
+  }
+}
